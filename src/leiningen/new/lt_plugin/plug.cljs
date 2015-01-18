@@ -9,12 +9,14 @@
 
 (object/object* ::{{name}}.hello
                 :tags [:{{name}}.hello]
+                :behaviors [::on-close-destroy]
                 :name "{{name}}"
                 :init (fn [this]
                         (hello-panel this)))
 
 (behavior ::on-close-destroy
           :triggers #{:close}
+          :desc "{{name}}: Close tab and tabset as well if last tab"
           :reaction (fn [this]
                       (when-let [ts (:lt.objs.tabs/tabset @this)]
                         (when (= (count (:objs @ts)) 1)
